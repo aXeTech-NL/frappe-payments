@@ -27,6 +27,13 @@ All general utils are stored in [utils](payments/utils) directory. The utils are
 
 [templates](payments/templates) directory has all the payment gateways' custom checkout pages.
 
+## One-time checkout
+
+The provider-neutral one-time contract and Mollie adapter are documented in
+[one-time-checkout.md](one-time-checkout.md). Orders, pricing and fulfillment stay
+in the consuming application. This Frappe 16 branch does not enable a provider or
+create a recurring agreement when a learner buys one course.
+
 ## Recurring payments
 
 Provider-neutral recurring-payment controllers can implement the versioned contract documented in [recurring-payments.md](recurring-payments.md). The contract is independent of provider webhooks and application-owned subscription records. Mollie setup, mandate flow, subscriptions, and durable webhook handling are documented in [mollie-recurring-payments.md](mollie-recurring-payments.md).

@@ -19,6 +19,8 @@ from frappe.utils import call_hook_method, get_request_session, get_url
 from payments.recurring import RecurringPaymentCapabilityError, RecurringPaymentValidationError
 from payments.utils import create_payment_gateway
 
+from .checkout import MollieCheckoutMixin
+
 MOLLIE_API_BASE = "https://api.mollie.com/v2"
 _PAYMENT_STATUSES = {"open", "pending", "authorized", "paid", "failed", "canceled", "expired"}
 _SUBSCRIPTION_STATUSES = {"pending", "active", "canceled", "suspended", "completed"}
@@ -34,7 +36,7 @@ class MollieMandatePending(Exception):
 	"""A paid first payment does not have an authoritative mandate yet."""
 
 
-class MollieSettings(Document):
+class MollieSettings(MollieCheckoutMixin, Document):
 	def validate(self):
 		api_key = self.api_key
 		if api_key == "********":

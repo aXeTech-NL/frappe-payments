@@ -101,8 +101,8 @@ def mollie_webhook(gateway: str = "", token: str = ""):
 	try:
 		name, should_enqueue = process_webhook(gateway, token, payment_id)
 	except (MollieWebhookRejected, MollieResourceNotFound) as exception:
-		# Malformed/forged routes and unknown ids cannot become valid by retrying.
-		frappe.db.rollback()
+		# Validation precedes all transport writes. Do not roll back unrelated
+		# caller work when rejecting a malformed route or an unknown resource.
 		frappe.log_error(
 			f"Mollie webhook rejected: {exception}",
 			f"Mollie payment id: {payment_id or 'unknown'}",
